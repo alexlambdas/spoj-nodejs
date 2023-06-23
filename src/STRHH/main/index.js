@@ -9,7 +9,7 @@ process.stdin.on('end', () => main(input.toString().split('\n')));
 // helper functions
 const head = (array) => {if(array.length === 0) return array; else return array[0];}
 const tail = (array) => {if(array.length === 0) throw new Error("index outbound exception"); else return array.slice(1)}
-const isEmpty = (array) => {if(array.length === 0) return true; else return false;}
+const isEmpty = (array) => {if(array.length === 0) return array.length === 0;}
 
 
 /**
@@ -20,7 +20,7 @@ async function halfHalf(strSequence) {
   /**
    * @tailrec
    */
-  function loop(arraySequence, flag, strAcct) {
+  function loop(arraySequence, flag, strAcct){
     if (isEmpty(arraySequence)) return strAcct;
     else {
       if (flag) return loop(tail(arraySequence), false, strAcct + head(arraySequence));
@@ -30,7 +30,7 @@ async function halfHalf(strSequence) {
 
   const arraySequence = strSequence.split('');
   const arrayHalf = arraySequence.slice(0, arraySequence.length/2);
-  return await loop(arrayHalf, true, '');
+  return loop(arrayHalf, true, '');
 }
 
 /**

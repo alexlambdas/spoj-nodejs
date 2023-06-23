@@ -13,7 +13,7 @@ process.stdin.on('end', () => entryPoint(input.toString().split('\n')));
  */
 const head = (array) => { if (array.length === 0) return array; else return array[0]; }
 const tail = (array) => { if (array.length === 0) throw new Error("index outbound exception"); else return array.slice(1) }
-const isEmpty = (array) => { if (array.length === 0) return true; else return false; }
+const isEmpty = (array) => { if (array.length === 0) return array.length === 0; }
 
 /**
  * solution contest
@@ -21,15 +21,15 @@ const isEmpty = (array) => { if (array.length === 0) return true; else return fa
 async function buildChessBoardLine(columns, flagLine) {
 
   function loop(nColumns, flag, strAcct) {
-    if (nColumns === 0) return strAcct;
+    if (nColumns <= 0) return strAcct;
     else {
       if(flag) return loop(nColumns-1, false, strAcct+'*');
       else return loop(nColumns-1, true, strAcct+'.');
     }
   }
 
-  if(flagLine) return await loop(columns, true, '');
-  else return await loop(columns, false, '');
+  if(flagLine) return loop(columns, true, '');
+  else return loop(columns, false, '');
 }
 
 async function buildChessBoardTable(rows, columns){
@@ -42,32 +42,38 @@ async function buildChessBoardTable(rows, columns){
     }
   }
 
-  return await loop(rows, true, Array());
+  return loop(rows, true, Array());
 }
 
-async function entryPoint(dataIn){
+async function start(dataIn){
 
-  async function loop(arrayDataIn){
-    if(!isEmpty(arrayDataIn)){
+  async function loop(arrayDataIn, arrayAcct){
+    if(isEmpty(arrayDataIn)) return arrayAcct;
+    else{
       const testCase = head(arrayDataIn).split(' ');
       const arrayResult = await buildChessBoardTable(Number(testCase[0]), Number(testCase[1]));
-      arrayResult.forEach(element => console.log(element));
-      console.log();
-      return loop(tail(arrayDataIn));
+      arrayAcct = [...arrayAcct, arrayResult];
+      return loop(tail(arrayDataIn), arrayAcct);
     }
   }
 
   dataIn.shift();
-  await loop(dataIn);
+  return loop(dataIn, Array());
+}
+
+async function entryPoint(dataIn){
+
+  const arrayResult = await start(dataIn);
+  
+  arrayResult.forEach(element => {
+    element.forEach(elementDeep => console.log(elementDeep));
+    console.log();
+  });
 }
 
 /**
- * local test
+ * export for testing
  */
-async function main(){
-  const dataIn = Array('3','3 1','4 4','2 5');
-  await entryPoint(dataIn);
-}
-main();
+module.exports = { buildChessBoardLine, buildChessBoardTable, start }
 
 

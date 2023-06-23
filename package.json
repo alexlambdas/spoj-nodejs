@@ -1,19 +1,24 @@
 {
-  "name": "spoj-nodejs",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexlambdas/spoj-nodejs.git"
-  },
-  "author": "alexLambdas",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/alexlambdas/spoj-nodejs/issues"
-  },
-  "homepage": "https://github.com/alexlambdas/spoj-nodejs#readme"
+    "name": "spoj-nodejs",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "sonar-scanner:local": "sonar-scanner -Dsonar.host.url=http://localhost:9012/",
+        "test-cpttrn1": "jest ./src/CPTTRN1/test/index.test.js --coverage"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/alexlambdas/spoj-nodejs.git"
+    },
+    "author": "alexLambdas",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/alexlambdas/spoj-nodejs/issues"
+    },
+    "homepage": "https://github.com/alexlambdas/spoj-nodejs#readme",
+    "devDependencies": {
+        "jest": "^29.5.0",
+        "sonarqube-scanner": "^3.0.1"
+    }
 }

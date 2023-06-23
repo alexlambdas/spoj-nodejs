@@ -1,4 +1,4 @@
 .git
 .vscode
-dist
+coverage
 node_modules
