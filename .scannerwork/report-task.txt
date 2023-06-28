@@ -2,5 +2,5 @@ projectKey=spoj-nodejs
 serverUrl=http://localhost:9012
 serverVersion=9.2.4.50792
 dashboardUrl=http://localhost:9012/dashboard?id=spoj-nodejs
-ceTaskId=AYjp-sEHufmv2SzXnE7T
-ceTaskUrl=http://localhost:9012/api/ce/task?id=AYjp-sEHufmv2SzXnE7T
+ceTaskId=AYkArJxXXfBU5wTGQ6WJ
+ceTaskUrl=http://localhost:9012/api/ce/task?id=AYkArJxXXfBU5wTGQ6WJ

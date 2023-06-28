@@ -5,7 +5,11 @@
     "main": "index.js",
     "scripts": {
         "sonar-scanner:local": "sonar-scanner -Dsonar.host.url=http://localhost:9012/",
-        "test-cpttrn1": "jest ./src/CPTTRN1/test/index.test.js --coverage"
+        "test": "jest --coverage",
+        "test-cpttrn1": "jest ./src/CPTTRN1/test/index.test.js --coverage",
+        "test-cpttrn7": "jest ./src/CPTTRN7/test/index.test.js --coverage",
+        "test-strhh": "jest ./src/STRHH/test/index.test.js --coverage",
+        "test-top10": "jest ./src/TOP10/test/index.test.js --coverage"
     },
     "repository": {
         "type": "git",

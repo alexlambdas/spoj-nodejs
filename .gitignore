@@ -1,4 +1,5 @@
 .git
+.scannerwork
 .vscode
 coverage
 node_modules
