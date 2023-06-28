@@ -4,7 +4,7 @@ process.stdin.setEncoding('utf8');
 // input
 let input = '';
 process.stdin.on('data', (chunk) => input += chunk);
-process.stdin.on('end', () => main(input.toString().split('\n')));
+process.stdin.on('end', () => entryPoint(input.toString().split('\n')));
 
 // helper functions
 const head = (array) => {if(array.length === 0) return array; else return array[0];}
@@ -13,18 +13,15 @@ const isEmpty = (array) => {if(array.length === 0) return array.length === 0;}
 
 
 /**
- * @description
+ * solution contest
  */
 async function halfHalf(strSequence) {
 
-  /**
-   * @tailrec
-   */
-  function loop(arraySequence, flag, strAcct){
-    if (isEmpty(arraySequence)) return strAcct;
+  function loop(arrayData, flag, strAcct){
+    if (isEmpty(arrayData)) return strAcct;
     else {
-      if (flag) return loop(tail(arraySequence), false, strAcct + head(arraySequence));
-      else return loop(tail(arraySequence), true, strAcct);
+      if (flag) return loop(tail(arrayData), false, strAcct + head(arrayData));
+      else return loop(tail(arrayData), true, strAcct);
     }
   }
 
@@ -33,27 +30,24 @@ async function halfHalf(strSequence) {
   return loop(arrayHalf, true, '');
 }
 
-/**
- * @description
- */
-async function entryPoint(dataIn){
+async function start(dataIn){
 
-  /**
-   * @tailrec
-   */
   async function loop(arrayIn, arrayAcct){
     if(isEmpty(arrayIn)) return arrayAcct;
     else return loop(tail(arrayIn), [...arrayAcct, await halfHalf(head(arrayIn))]);
   }
 
   dataIn.shift();
-  return await loop(dataIn, Array());
+  return loop(dataIn, Array());
+}
+
+async function entryPoint(dataIn){
+
+  const arrayResult = await start(dataIn);
+  arrayResult.forEach(element => console.log(element));
 }
 
 /**
- * @description
+ * export for testing
  */
-async function main(dataIn){
-  const arrayResult = await entryPoint(dataIn);
-  arrayResult.forEach(element => console.log(element));
-}
+module.exports = { halfHalf, start }
