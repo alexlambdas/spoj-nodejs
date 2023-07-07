@@ -1,3 +1,6 @@
+//
+"use strict";
+
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
 
@@ -126,9 +129,9 @@ function buildDiamondLine(lineSize, indexLine, up) {
  * ]
  * 
  */
-function buildOneDiamond(diamondSize){
+async function buildOneDiamond(diamondSize){
 
-  async function loop(index, arrayAcct){
+  async function loop(index, arrayAcct = Array()){
 
     switch(true){
 
@@ -136,10 +139,11 @@ function buildOneDiamond(diamondSize){
         return arrayAcct;
 
       case (diamondSize - 1) <= index:
-        return loop(index+1, [...arrayAcct, await buildDiamondLine(diamondSize*2, index, true)])
-
+        return loop(index+1, [...arrayAcct, await buildDiamondLine(diamondSize*2, index, true)]);
+        
       default:
         return loop(index+1, [...arrayAcct, await buildDiamondLine(diamondSize*2, index, false)]);
+        
     }
   }
 
@@ -182,7 +186,10 @@ async function gridColumns(columns, size){
 
   async function loop(ondeDiamond, arrayAcct){
     if(isEmpty(ondeDiamond)) return arrayAcct;
-    else return loop(tail(ondeDiamond), [...arrayAcct, await loopOverDiamondLine(columns, head(ondeDiamond), '')]);
+    else{
+      arrayAcct.push(await loopOverDiamondLine(columns, head(ondeDiamond), ''));
+      return loop(tail(ondeDiamond), arrayAcct);
+    }
   }
 
   const diamond = await buildOneDiamond(size);
@@ -222,7 +229,10 @@ function addDiamondRows(diamondFromGridColumns, diamondAcct){
 
   function loop(diamondPatternColumns, arrayAcct){
     if(isEmpty(diamondPatternColumns)) return arrayAcct;
-    else return loop(tail(diamondPatternColumns), [...arrayAcct, head(diamondPatternColumns)]);
+    else{
+      arrayAcct.push(head(diamondPatternColumns));
+      return loop(tail(diamondPatternColumns), arrayAcct);
+    }
   }
 
   return loop(diamondFromGridColumns, Array.from(diamondAcct));
