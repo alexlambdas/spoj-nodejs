@@ -58,6 +58,8 @@ describe('INNER_JOIN contest', () => {
       {"id":5,"firstName":"Henry","lastName":"Davitashvili","carMakeId":5,"carMake":"Mitsubishi"}
     ];
 
-    expect(innerjoin.innerJoin(person, carMake)("carMakeId")).toEqual(result);
+    const keyToIndexing = "carMakeId";
+
+    expect(innerjoin.innerJoin(person,carMake,keyToIndexing)(innerjoin.indexingArrayToObject)).toEqual(result);
   })
 })

@@ -1,49 +1,36 @@
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
 
-/**
- * input
- */
+//
 let input = '';
 process.stdin.on('data', (chunk) => input += chunk);
 process.stdin.on('end', () => entryPoint(input.toString().split('\n')));
 
-/**
- * helper functions
- */
-const head = (array) => { if (array.length === 0) return array; else return array[0]; }
-const tail = (array) => { if (array.length === 0) throw new Error("index outbound exception"); else return array.slice(1) }
-const isEmpty = (array) => { if (array.length === 0) return array.length === 0; }
 
-/**
- * solution contest
- */
-function masterChef(numberRanked){
-    if(numberRanked <= 0) return 'NO';
-    else if(numberRanked >= 0 && numberRanked <= 10) return 'YES';
-    else return 'NO';
+function masterChef(ranked) {
+  switch (true) {
+    case ranked <= 0:
+      return 'NO';
+
+    case ranked >= 0 && ranked <= 10:
+      return 'YES';
+
+    default:
+      return 'NO';
+  }
 }
 
-function start(arrayDataIn){
+function entryPoint(dataIn) {
 
-    function loop(arrayData, arrayAcct){
-        if(isEmpty(arrayData)) return arrayAcct;
-        else return loop(tail(arrayData), [...arrayAcct, masterChef(Number(head(arrayData)))]);
-    }
-
-    arrayDataIn.shift();
-    return loop(arrayDataIn, Array());
+  const testCases = dataIn.shift();
+  for (let index = 0; index < testCases; index++) {
+    console.log(masterChef(dataIn[Number(index)]));
+  }
 }
 
-function entryPoint(arrayDataIn){
-
-    const arrayResult = start(arrayDataIn);
-    arrayResult.forEach(element => console.log(element));
-}
-
-entryPoint(Array('4','15','16','1','50','60','3','4','9'));
+entryPoint(Array('4', '15', '10', '1', '50'));
 
 /**
  * export for testing
  */
-module.exports = { masterChef, start }
+module.exports = { masterChef }

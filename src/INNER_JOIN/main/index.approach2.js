@@ -34,14 +34,20 @@ function indexingArrayToObject(dataIn = Array(), keyToIndexig) {
  * Array,
  * 
  */
-function innerJoin(primaryTable, foreignTable){
-  return function(keyToIndex){
+function innerJoin(primaryTable, foreignTable, keyToIndex){
+  return function(fnIndexingArrayToObject){
 
-    const indexedObject = indexingArrayToObject(foreignTable, keyToIndex);
+    const indexedObject = fnIndexingArrayToObject(foreignTable, keyToIndex);
 
     return primaryTable.reduce((prev, current) => {
       if(indexedObject[`${current[keyToIndex]}`] != undefined){
-        return [...prev,{...current,...indexedObject[`${current[keyToIndex]}`]}];
+        return [
+          ...prev,
+          {
+            ...current,
+            ...indexedObject[`${current[keyToIndex]}`]
+          }
+        ];
       }
       else return [...prev];
     }, []);
